@@ -16,7 +16,12 @@ class WrappingPhysicalClock implements PhysicalClock {
     }
 
     @Override
-    public Instant getInstant() {
+    public PhysicalClock tick() {
+        return null;
+    }
+
+    @Override
+    public Instant getTimestamp() {
         return wrapped.instant();
     }
 
