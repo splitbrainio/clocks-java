@@ -1,4 +1,4 @@
-package io.splitbrain.clocks;
+package io.splitbrain.util;
 
 /**
  * Enum encoding the outcomes when you compare values which are not required to have strict

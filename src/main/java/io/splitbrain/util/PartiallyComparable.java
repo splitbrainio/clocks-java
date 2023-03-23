@@ -1,11 +1,12 @@
-package io.splitbrain.clocks;
+package io.splitbrain.util;
 
 import java.util.Optional;
 
 /**
  * Instances implementing this interface can be compared with one and other, producing a {@link PartialComparison} result.
  */
-interface PartiallyComparable<T> {
+public interface PartiallyComparable<T> {
+
     PartialComparison compareTo(T other);
 
     static <T extends PartiallyComparable<T>> Optional<T> min(T l, T r) {
@@ -17,7 +18,7 @@ interface PartiallyComparable<T> {
         };
     }
 
-    static <A extends PartiallyComparable<A>> Optional<A> max(A l, A r) {
+    static <T extends PartiallyComparable<T>> Optional<T> max(T l, T r) {
         var comparison = l.compareTo(r);
         return switch (comparison) {
             case EQUAL, GREATER_THAN -> Optional.ofNullable(l);

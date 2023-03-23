@@ -1,5 +1,7 @@
 package io.splitbrain.clocks;
 
+import io.splitbrain.util.PartiallyComparable;
+
 /**
  * Instances implementing this interface exhibit "clock-like" behaviour.
  * They can be used for determining partial ordering between "events" such as inter-process messages, or updates to a
@@ -35,6 +37,14 @@ public interface ImmutableClock<T, V> extends PartiallyComparable<T> {
     T startOfTime();
 
     /**
-     * TODO: implement merge.
+     * All clocks implement some form of merge function.
+     * By default, this merge function simply returns the greater of the two clocks, however many implementations
+     * (particularly for logical clocks like the {@link HybridLogicalClock} or {@link VectorClock}) may choose to
+     * override this behaviour with something more specific.
+     *
+     * @param l A clock to be compared and merged
+     * @param r A clock to be compared and merged
+     * @return A newly created clock object resulting from the merge operator
      */
+     T merge(T l, T r);
 }
