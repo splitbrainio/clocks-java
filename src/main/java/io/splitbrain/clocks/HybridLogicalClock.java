@@ -1,5 +1,6 @@
 package io.splitbrain.clocks;
 
+import io.splitbrain.util.Mergeable;
 import io.splitbrain.util.PartialComparison;
 
 import java.time.Clock;
@@ -20,7 +21,7 @@ import java.time.Instant;
  * The timestamps stored by HybridLogicalClock objects are of millisecond precision, though the
  * counter may be used to derive ordering between several objects with the same timestamp.
  */
-public class HybridLogicalClock implements PhysicalClock {
+public class HybridLogicalClock implements PhysicalClock, Mergeable<HybridLogicalClock> {
 
     private final PhysicalClock physicalClock;
     private final Instant timestamp;
@@ -59,15 +60,14 @@ public class HybridLogicalClock implements PhysicalClock {
         return physicalClock.startOfTime();
     }
 
-    //TODO: Make generic so merge is in terms of HLC
     @Override
-    public PhysicalClock merge(PhysicalClock l, PhysicalClock r) {
+    public HybridLogicalClock merge(HybridLogicalClock l, HybridLogicalClock r) {
         var previousTimestampL = l.getTimestamp();
         var previousTimestampR = r.getTimestamp();
         var nextTimestamp = laterInstant(previousTimestampL, previousTimestampR);
         var nextCounter = 0;
         if (previousTimestampL.equals(previousTimestampR)) {
-            Math.max(l.counter)
+            Math.max(l.counter, r.counter)
         }
         return ;
     }
